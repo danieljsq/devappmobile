@@ -17,10 +17,7 @@ const mostrarFrente = () => {
     }
 } 
 
-// ----- ROTACIÓN DE LA TARJETA
-tarjeta.addEventListener('click', () => {
-    tarjeta.classList.toggle('active');
-});
+
 
 // ----- BOTÓN DE ABRIR FORMULARIO
 btnAbrirFormulario.addEventListener('click', () => {
