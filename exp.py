@@ -1,2 +1,3 @@
 print ("djsq")
-print"hola"
+print("hola")
+print ("como estas")
