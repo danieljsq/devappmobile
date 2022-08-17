@@ -17,11 +17,7 @@ function checkInputs() {
 	const passwordValue = password.value.trim();
 	const password2Value = password2.value.trim();
 	
-	if(usuarioValue === '') {
-		setErrorFor(usuario, 'Nose puede dejar el usuario en blanco');
-	} else {
-		setSuccessFor(usuario);
-	}
+	
 	
 	if(emailValue === '') {
 		setErrorFor(email, 'No puede dejar el email en blanco');
