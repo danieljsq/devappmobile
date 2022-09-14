@@ -1,0 +1,32 @@
+node —version
+Nvm windows, releases para descargar e instalar
+Nvm version
+Nvm install Its
+Nvm 16.17.0
+Nvm use 16.17.0
+Npm install -g @angular/cli
+Ng version (version de angular)
+Visual studio code extensions angular language, editorconfig for vs code, material icon theme
+Ng new (nombre del proyecto) select style scss
+Npm run (comando)
+.vscode ) Settings.json
+
+No usar powershell CIS clear cmd html:5 crear cuerpo por defecto de una pagina html Editor de texto vim i insertar
+Shift: wq para guardar snake case pascal_Case camelCase Comandos:
+git init iniciar repositorio git status ver archivos de mi area de trabajo git add agregar archivos al area de trabajo
+(git add -A) (git add .) Agregan todos los archvios a mi area de trabajo git restore para desacer cambios del area de trabajo git commit punto de control
+(git commit -m " ") punto de control con mensaje directo git config -global user.email  git config -global user.name  git log ver informacion de mi area de trabajo git branch ver ramas git branch crear rama git checkout cambiar de ram git checkout -b se crea la rama y se mueve a ella git merge fusion de ramas git remote -v listar fuentes remotas git remote add poner una alias a las fuentes git push 'fuente' 'rama'
+cu
+git clone  h o ram prim •pal y	aria
+10
+Forma remota
+Git clone pegar enlace
+Git add git comit -m
+Git push
+Git pull
+
+Ng new mi proyecto —skip-git
+Ng generate component componentes/nombredelcomponente
+Ng g c componentes/nombredelcomponente
+Ng g i modelo/nombredelmodelo
+Respomsabilidad de componentes que solo haga su pega y nada mas

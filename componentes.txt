@@ -1,0 +1,300 @@
+alumno.componentes.html
+
+<article [id]="alumno.id">
+  <h1>{{alumno.rut}}</h1>
+  <p>{{alumno.nombre}}</p>
+  <p>{{alumno.apellido}}</p>
+  <p>{{alumno.edad}}</p>
+  <p>{{alumno.seccion}}</p>
+</article>
+
+alumno.componentes.ts
+
+import { Component, Input} from '@angular/core';
+import {Alumno} from '../../modelo/alumno';
+@Component({
+  selector: 'app-alumno',
+  templateUrl: './alumno.component.html',
+  styleUrls: ['./alumno.component.scss']
+})
+export class AlumnoComponent {
+@Input() public alumno!: Alumno;
+}
+---------------------------------------------------------------------------------------------------------------
+formulario-alumno.component.html
+
+<section>
+  <fieldset>
+    <label for="">Rut del Alumno</label>
+    <input
+      type="number"
+      name="rut"
+      min="1"
+      max="100000000"
+      [value]="nuevoAlumno.rut"
+      (input)="nuevoRut($event)">
+  </fieldset>
+  <fieldset>
+    <label for="">Nombre del Alumno</label>
+    <input
+    type="text"
+    name="nombre"
+    [value]="nuevoAlumno.nombre"
+    (input)="nuevoNombre($event)">
+  </fieldset>
+  <fieldset>
+    <label for="">Apellido del Alumno</label>
+    <input
+    type="text"
+    name="apellido"
+    [value]="nuevoAlumno.apellido"
+    (input)="nuevoApellido($event)">
+  </fieldset>
+  <fieldset>
+    <label for="">Edad del Alumno</label>
+    <input
+      type="number"
+      name="edad"
+      min="1"
+      max="200"
+      [value]="nuevoAlumno.edad"
+      (input)="nuevoEdad($event)">
+  </fieldset>
+  <fieldset>
+    <label for="">Seleccione el tipo de seccion</label>
+    <select
+    name="tipo"
+    [value]="nuevoAlumno.seccion"
+    (change)="nuevoSeccion($event)">
+    <option value="L">L</option>
+    <option value="M">M</option>
+    <option value="H">H</option>
+    <option value="B">B</option>
+    <option value="R">R</option>
+  </select>
+  </fieldset>
+  <br>
+  <button (click)="guardarAlumno()">Guardar Nuevo Alumno</button>
+</section>
+
+formulario-alumno.component.ts
+
+import { Component, EventEmitter, Output, } from '@angular/core';
+import { Alumno, tipoSeccion } from 'src/app/modelo/alumno';
+import { Seccion } from 'src/app/modelo/seccion'
+
+@Component({
+  selector: 'app-formulario-alumno',
+  templateUrl: './formulario-alumno.component.html',
+  styleUrls: ['./formulario-alumno.component.scss']
+})
+export class FormularioAlumnoComponent {
+  @Output() public puchalumno = new EventEmitter<Alumno>();
+  public nuevoAlumno: Alumno = {
+    rut: 0 , nombre: '', apellido: '', edad: 0, seccion: 'B'
+  }
+
+
+  public nuevoRut(evento: Event): void {
+    const elemento = evento.target as HTMLInputElement;
+    this.nuevoAlumno.rut = Number.parseInt(elemento.value) || 0;
+  }
+
+  public nuevoNombre(evento: Event): void {
+    const variable = evento.target as HTMLInputElement;
+    this.nuevoAlumno.nombre = variable.value;
+  }
+
+  public nuevoApellido(evento: Event): void {
+    const variable = evento.target as HTMLInputElement;
+    this.nuevoAlumno.apellido = variable.value;
+  }
+
+  public nuevoEdad(evento: Event): void {
+    const elemento = evento.target as HTMLInputElement;
+    this.nuevoAlumno.edad = Number.parseInt(elemento.value) || 0;
+  }
+
+  public nuevoSeccion(evento: Event): void {
+    const elemento = evento.target as HTMLSelectElement;
+    this.nuevoAlumno.seccion = elemento.value as tipoSeccion
+  }
+
+  public guardarAlumno(): void {
+    const copia: Alumno = {
+      ...this.nuevoAlumno
+    };
+    this.puchalumno.emit(copia);
+    this.nuevoAlumno.rut = 1;
+    this.nuevoAlumno.nombre = '';
+    this.nuevoAlumno.apellido = '';
+    this.nuevoAlumno.edad = 1;
+    this.nuevoAlumno.seccion = 'L';
+  }
+
+}
+
+----------------------------------------------------------------------------------------------------------------
+
+formulario-seccion.component.html
+
+<section>
+  <fieldset>
+    <label for="">Siglas de la Seccion</label>
+    <input
+    type="text"
+    name="nombre"
+    [value]="nuevoSeccion.siglaSeccion"
+    (input)="nuevoSigla($event)">
+  </fieldset>
+  <br>
+  <button (click)="guardarSeccion()">Guardar Nuevo Seccion</button>
+</section>
+
+formulario-seccion.component.ts
+
+import { Component, EventEmitter, Output } from '@angular/core';
+import { Seccion } from 'src/app/modelo/seccion';
+
+@Component({
+  selector: 'app-formulario-seccion',
+  templateUrl: './formulario-seccion.component.html',
+  styleUrls: ['./formulario-seccion.component.scss']
+})
+export class FormularioSeccionComponent {
+ @Output() public puchaseccion = new EventEmitter<Seccion>();
+ public nuevoSeccion: Seccion = {
+  siglaSeccion: ''
+ }
+
+ public nuevoSigla(evento: Event): void {
+  const variable = evento.target as HTMLInputElement;
+  this.nuevoSeccion.siglaSeccion = variable.value;
+}
+
+public guardarSeccion(): void {
+  const copia: Seccion = {
+    ...this.nuevoSeccion
+  };
+  this.puchaseccion.emit(copia);
+  this.nuevoSeccion.siglaSeccion = " "
+}
+
+}
+
+---------------------------------------------------------------------------------------------------------------------
+
+listar-alumno.component.html
+
+<section>
+  <app-alumno *ngFor="let item of listarAlumno" [alumno]="item"></app-alumno>
+</section>
+
+listar-alumno.component.ts
+
+import { Component, Input } from '@angular/core';
+import { Alumno } from 'src/app/modelo/alumno';
+
+@Component({
+  selector: 'app-listar-alumno',
+  templateUrl: './listar-alumno.component.html',
+  styleUrls: ['./listar-alumno.component.scss']
+})
+export class ListarAlumnoComponent {
+@Input() public listarAlumno!: Array<Alumno>;
+
+}
+
+----------------------------------------------------------------------------------------------------------------
+
+listar-seccion.component.html
+
+<section>
+  <app-seccion *ngFor="let item of listarSeccion" [seccion]="item"></app-seccion>
+</section>
+
+listar-seccion.component.ts
+
+import { Component, Input } from '@angular/core';
+import { Seccion } from 'src/app/modelo/seccion'
+
+@Component({
+  selector: 'app-listar-seccion',
+  templateUrl: './listar-seccion.component.html',
+  styleUrls: ['./listar-seccion.component.scss']
+})
+export class ListarSeccionComponent {
+  @Input() public listarSeccion!: Array<Seccion>;
+
+}
+
+--------------------------------------------------------------------------------------------------------------
+
+seccion.component.html
+
+<article [id]="seccion.id">
+  <h1>{{seccion.siglaSeccion}}</h1>
+</article>
+
+seccion.component.ts
+
+import { Component, Input } from '@angular/core';
+import { Seccion } from '../../modelo/seccion'
+
+@Component({
+  selector: 'app-seccion',
+  templateUrl: './seccion.component.html',
+  styleUrls: ['./seccion.component.scss']
+})
+export class SeccionComponent {
+  @Input() public seccion!: Seccion;
+
+}
+
+----------------------------------------------------------------------------------------------------------------
+
+historial.component.html
+
+<article>
+  <h1>{{historial.fecha | date: 'shortDate' }}</h1>
+  <h2>{{historial.hora  | date: 'shortTime'}}</h2>
+</article>
+
+historial.component.ts
+
+import { Component, Input } from '@angular/core';
+import { Historial } from 'src/app/modelo/historial';
+
+@Component({
+  selector: 'app-historial',
+  templateUrl: './historial.component.html',
+  styleUrls: ['./historial.component.scss']
+})
+export class HistorialComponent  {
+@Input() public historial!: Historial;
+
+}
+
+-------------------------------------------------------------------------------------------------------------------
+
+listar-historial.component.html
+
+<section>
+  <app-historial *ngFor="let item of listarHistorial" [historial]="item"></app-historial>
+</section>
+
+listar-historial.component.ts
+
+import { Component, Input } from '@angular/core';
+import { Historial } from 'src/app/modelo/historial';
+
+@Component({
+  selector: 'app-listar-historial',
+  templateUrl: './listar-historial.component.html',
+  styleUrls: ['./listar-historial.component.scss']
+})
+export class ListarHistorialComponent {
+  @Input() public listarHistorial!: Array<Historial>;
+}
+
+------------------------------------------------------------------------------------------------------
